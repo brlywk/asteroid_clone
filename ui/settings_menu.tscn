@@ -1,0 +1,783 @@
+[gd_scene load_steps=9 format=3 uid="uid://bfcgctem4fstt"]
+
+[ext_resource type="Shader" path="res://ui/blur.gdshader" id="1_rcrdg"]
+[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_evvjk"]
+[ext_resource type="Script" path="res://ui/settings_menu.gd" id="3_bhfdy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qmmka"]
+shader = ExtResource("1_rcrdg")
+shader_parameter/blur = 2.5
+shader_parameter/brightness = 1.0
+
+[sub_resource type="Animation" id="Animation_5gh72"]
+resource_name = "Unpause"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qvrq2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lke7w"]
+resource_name = "Pause"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/blur")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [2.5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/brightness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [0.75]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.5),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8rj5"]
+_data = {
+"Hide": SubResource("Animation_5gh72"),
+"RESET": SubResource("Animation_qvrq2"),
+"Show": SubResource("Animation_lke7w")
+}
+
+[node name="SettingsMenu" type="ColorRect"]
+material = SubResource("ShaderMaterial_qmmka")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_evvjk")
+color = Color(1, 1, 1, 0)
+script = ExtResource("3_bhfdy")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(512, 256)
+offset_left = 256.0
+offset_top = 74.0
+offset_right = 768.0
+offset_bottom = 694.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 505.0
+offset_bottom = 613.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 482.0
+offset_bottom = 590.0
+theme_override_constants/separation = 8
+
+[node name="HeaderLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_right = 466.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 24
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 41.0
+offset_right = 466.0
+offset_bottom = 45.0
+
+[node name="DisplaySectionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 53.0
+offset_right = 466.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 20
+text = "Display
+"
+
+[node name="DisplayContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 90.0
+offset_right = 466.0
+offset_bottom = 125.0
+theme_override_constants/separation = 8
+
+[node name="FullscreenButton" type="CheckButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayContainer"]
+unique_name_in_owner = true
+offset_right = 466.0
+offset_bottom = 35.0
+size_flags_horizontal = 3
+text = "Fullscreen"
+flat = true
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 133.0
+offset_right = 466.0
+offset_bottom = 137.0
+
+[node name="VolumeSectionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 145.0
+offset_right = 466.0
+offset_bottom = 174.0
+theme_override_font_sizes/font_size = 20
+text = "Volume
+"
+
+[node name="MasterContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 182.0
+offset_right = 466.0
+offset_bottom = 206.0
+theme_override_constants/separation = 8
+
+[node name="MasterLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Master"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 398.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+rounded = true
+
+[node name="MasterVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 406.0
+offset_right = 466.0
+offset_bottom = 24.0
+text = "100 %"
+horizontal_alignment = 2
+
+[node name="MusicContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 214.0
+offset_right = 466.0
+offset_bottom = 238.0
+theme_override_constants/separation = 8
+
+[node name="MusicLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Music"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 398.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+rounded = true
+
+[node name="MusicVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 406.0
+offset_right = 466.0
+offset_bottom = 24.0
+text = "100 %"
+horizontal_alignment = 2
+
+[node name="EffectsContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 246.0
+offset_right = 466.0
+offset_bottom = 270.0
+theme_override_constants/separation = 8
+
+[node name="EffectsLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EffectsContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Effects"
+
+[node name="EffectsVolumeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EffectsContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 398.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+value = 100.0
+rounded = true
+
+[node name="EffectsVolumeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EffectsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 406.0
+offset_right = 466.0
+offset_bottom = 24.0
+text = "100 %"
+horizontal_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 278.0
+offset_right = 466.0
+offset_bottom = 282.0
+
+[node name="LooksSectionLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 290.0
+offset_right = 466.0
+offset_bottom = 319.0
+theme_override_font_sizes/font_size = 20
+text = "Look & Feel"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 327.0
+offset_right = 466.0
+offset_bottom = 514.0
+theme_override_constants/margin_top = 8
+
+[node name="TabContainer" type="TabContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+offset_top = 8.0
+offset_right = 466.0
+offset_bottom = 187.0
+tab_alignment = 1
+
+[node name="PlayerMarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 36.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/tab_name = "Player Ship"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 444.0
+offset_bottom = 128.0
+theme_override_constants/separation = 8
+
+[node name="PlayerColorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer"]
+offset_right = 436.0
+offset_bottom = 24.0
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="PlayerColorLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerColorContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Color"
+
+[node name="PlayerColorPickerButton" type="ColorPickerButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerColorContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 436.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+edit_alpha = false
+
+[node name="PlayerLineContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer"]
+offset_top = 32.0
+offset_right = 436.0
+offset_bottom = 56.0
+size_flags_vertical = 3
+
+[node name="PlayerLineLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerLineContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Line Size"
+
+[node name="PlayerLineSizeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerLineContainer"]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_right = 372.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 0.5
+allow_greater = true
+allow_lesser = true
+
+[node name="PlayerLineSizeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerLineContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 376.0
+offset_right = 436.0
+offset_bottom = 24.0
+text = "3 px"
+horizontal_alignment = 2
+
+[node name="DummyContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 64.0
+offset_right = 436.0
+offset_bottom = 88.0
+size_flags_vertical = 3
+
+[node name="Dummy Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/DummyContainer"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Spacer"
+
+[node name="DummyContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 96.0
+offset_right = 436.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+
+[node name="Dummy Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/DummyContainer2"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Spacer"
+
+[node name="AttackMarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/tab_name = "Player Attacks"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 458.0
+offset_bottom = 142.0
+theme_override_constants/separation = 8
+
+[node name="BulletColorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer"]
+offset_right = 464.0
+offset_bottom = 24.0
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="BulletColorLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletColorContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Color"
+
+[node name="BulletColorPickerButton" type="ColorPickerButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletColorContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 464.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+edit_alpha = false
+
+[node name="BulletLineContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer"]
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 56.0
+size_flags_vertical = 3
+
+[node name="BulletLineLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletLineContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Line Size"
+
+[node name="BulletLineSizeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletLineContainer"]
+unique_name_in_owner = true
+offset_left = 104.0
+offset_right = 400.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 0.5
+allow_greater = true
+allow_lesser = true
+
+[node name="BulletLineSizeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletLineContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 404.0
+offset_right = 464.0
+offset_bottom = 24.0
+text = "3 px"
+horizontal_alignment = 2
+
+[node name="DummyContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 64.0
+offset_right = 464.0
+offset_bottom = 88.0
+size_flags_vertical = 3
+
+[node name="Dummy Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/DummyContainer"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Spacer"
+
+[node name="DummyContainer2" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 96.0
+offset_right = 464.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+
+[node name="Dummy Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/DummyContainer2"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Spacer"
+
+[node name="AsteroidMarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/tab_name = "Asteroids"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 458.0
+offset_bottom = 142.0
+theme_override_constants/separation = 8
+
+[node name="AsteroidColorContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer"]
+offset_right = 464.0
+offset_bottom = 24.0
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="AsteroidColorLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/AsteroidColorContainer"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 24.0
+text = "Color"
+
+[node name="AsteroidColorPickerButton" type="ColorPickerButton" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/AsteroidColorContainer"]
+unique_name_in_owner = true
+offset_left = 108.0
+offset_right = 464.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+edit_alpha = false
+
+[node name="SmallAsteroidLineContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer"]
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 56.0
+size_flags_vertical = 3
+
+[node name="SmallAsteroidLineLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/SmallAsteroidLineContainer"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Line Size Small"
+
+[node name="SmallAsteroidLineSizeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/SmallAsteroidLineContainer"]
+unique_name_in_owner = true
+offset_left = 184.0
+offset_right = 400.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 0.5
+allow_greater = true
+allow_lesser = true
+
+[node name="SmallAsteroidLineSizeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/SmallAsteroidLineContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 404.0
+offset_right = 464.0
+offset_bottom = 24.0
+text = "3 px"
+horizontal_alignment = 2
+
+[node name="MediumAsteroidLineContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer"]
+offset_top = 64.0
+offset_right = 464.0
+offset_bottom = 88.0
+size_flags_vertical = 3
+
+[node name="MediumAsteroidLineLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/MediumAsteroidLineContainer"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Line Size Medium"
+
+[node name="MediumAsteroidLineSizeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/MediumAsteroidLineContainer"]
+unique_name_in_owner = true
+offset_left = 184.0
+offset_right = 400.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 0.5
+allow_greater = true
+allow_lesser = true
+
+[node name="MediumAsteroidLineSizeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/MediumAsteroidLineContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 404.0
+offset_right = 464.0
+offset_bottom = 24.0
+text = "3 px"
+horizontal_alignment = 2
+
+[node name="LargeAsteroidLineContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer"]
+offset_top = 96.0
+offset_right = 464.0
+offset_bottom = 120.0
+size_flags_vertical = 3
+
+[node name="LargeAsteroidLineLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/LargeAsteroidLineContainer"]
+custom_minimum_size = Vector2(180, 0)
+offset_right = 180.0
+offset_bottom = 24.0
+text = "Line Size Large"
+
+[node name="LargeAsteroidLineSizeSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/LargeAsteroidLineContainer"]
+unique_name_in_owner = true
+offset_left = 184.0
+offset_right = 400.0
+offset_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 0.5
+allow_greater = true
+allow_lesser = true
+
+[node name="LargeAsteroidLineSizeLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/LargeAsteroidLineContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+offset_left = 404.0
+offset_right = 464.0
+offset_bottom = 24.0
+text = "3 px"
+horizontal_alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 522.0
+offset_right = 466.0
+offset_bottom = 582.0
+theme_override_constants/margin_top = 16
+
+[node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+offset_top = 16.0
+offset_right = 466.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Back"
+
+[node name="InfoMargin" type="MarginContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -65.0
+offset_right = 22.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 32
+
+[node name="InfoLabel" type="Label" parent="InfoMargin"]
+offset_right = 45.0
+offset_bottom = 33.0
+theme = ExtResource("2_evvjk")
+theme_override_font_sizes/font_size = 24
+text = "abc"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Hide"
+libraries = {
+"": SubResource("AnimationLibrary_b8rj5")
+}
+
+[connection signal="mouse_entered" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayContainer/FullscreenButton" to="." method="_on_fullscreen_button_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayContainer/FullscreenButton" to="." method="_on_fullscreen_button_mouse_exited"]
+[connection signal="toggled" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MasterContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MusicContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/EffectsContainer/EffectsVolumeSlider" to="." method="_on_effects_volume_slider_value_changed"]
+[connection signal="mouse_entered" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer" to="." method="_on_tab_container_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer" to="." method="_on_tab_container_mouse_exited"]
+[connection signal="popup_closed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerColorContainer/PlayerColorPickerButton" to="." method="_on_player_color_picker_button_popup_closed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/PlayerMarginContainer/VBoxContainer/PlayerLineContainer/PlayerLineSizeSlider" to="." method="_on_player_line_size_slider_value_changed"]
+[connection signal="popup_closed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletColorContainer/BulletColorPickerButton" to="." method="_on_bullet_color_picker_button_popup_closed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AttackMarginContainer/VBoxContainer/BulletLineContainer/BulletLineSizeSlider" to="." method="_on_bullet_line_size_slider_value_changed"]
+[connection signal="popup_closed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/AsteroidColorContainer/AsteroidColorPickerButton" to="." method="_on_asteroid_color_picker_button_popup_closed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/SmallAsteroidLineContainer/SmallAsteroidLineSizeSlider" to="." method="_on_small_asteroid_line_size_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/MediumAsteroidLineContainer/MediumAsteroidLineSizeSlider" to="." method="_on_medium_asteroid_line_size_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/TabContainer/AsteroidMarginContainer/VBoxContainer/LargeAsteroidLineContainer/LargeAsteroidLineSizeSlider" to="." method="_on_large_asteroid_line_size_slider_value_changed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/BackButton" to="." method="_on_back_button_pressed"]

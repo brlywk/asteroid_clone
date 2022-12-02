@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://co6drcqlg5t0l"]
+
+[ext_resource type="Script" path="res://bullet/bullet.gd" id="1_bnfxv"]
+[ext_resource type="AudioStream" uid="uid://deofi5qsj2oqx" path="res://audio/laser_1.ogg" id="2_3r42v"]
+[ext_resource type="AudioStream" uid="uid://07bqj2rkifom" path="res://audio/laser_2.ogg" id="3_6fhce"]
+[ext_resource type="AudioStream" uid="uid://b11sqs2f5fdt1" path="res://audio/laser_3.ogg" id="4_v8dgp"]
+[ext_resource type="AudioStream" uid="uid://dmwbjry6jnsip" path="res://audio/laser_4.ogg" id="5_ci83f"]
+[ext_resource type="AudioStream" uid="uid://cnmipwagv4718" path="res://audio/laser_5.ogg" id="6_hci0d"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jw6ff"]
+friction = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcguo"]
+size = Vector2(4, 3.625)
+
+[node name="Bullet" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 0
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_jw6ff")
+linear_damp_mode = 1
+angular_damp_mode = 1
+angular_damp = -1.0
+script = ExtResource("1_bnfxv")
+bullet_spin_speed = 1.571
+laser_array = [ExtResource("2_3r42v"), ExtResource("3_6fhce"), ExtResource("4_v8dgp"), ExtResource("5_ci83f"), ExtResource("6_hci0d")]
+metadata/_edit_group_ = true
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 2, -2, 0, 0, -2, 2, 0, 0, 2)
+width = 1.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.19209e-07)
+rotation = 0.785398
+shape = SubResource("RectangleShape2D_lcguo")
+
+[node name="TimeToLiveTimer" type="Timer" parent="."]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+max_distance = 1024.0
+bus = &"Effects"
+area_mask = 7

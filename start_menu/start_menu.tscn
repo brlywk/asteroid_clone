@@ -1,0 +1,280 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqxbts8jgwqjh"]
+
+[ext_resource type="Script" path="res://start_menu/start_menu.gd" id="1_ewfjn"]
+[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_cybgf"]
+[ext_resource type="PackedScene" uid="uid://dpa80diwk0sru" path="res://main/main.tscn" id="2_guehj"]
+[ext_resource type="Texture2D" uid="uid://bmc1sgsvkw5wf" path="res://start_menu/barely_awake_games.png" id="2_x3g3f"]
+[ext_resource type="PackedScene" uid="uid://bfcgctem4fstt" path="res://ui/settings_menu.tscn" id="3_yjl72"]
+[ext_resource type="AudioStream" uid="uid://csvblg6wnnty4" path="res://audio/menu_music.ogg" id="4_c2od7"]
+
+[sub_resource type="Shader" id="Shader_x4ews"]
+code = "shader_type canvas_item;
+
+
+uniform int iterations : hint_range(0, 100, 1) = 17;
+uniform float formuparam : hint_range(0.0, 100.0, 0.001) = 0.53;
+
+
+uniform int volsteps : hint_range(0, 100, 1) = 20;
+uniform float stepsize : hint_range(0.0, 100.0, 0.001) = 0.1;
+
+
+uniform float zoom : hint_range(0.0, 100.0, 0.001) = 0.800;
+uniform float tile : hint_range(0.0, 100.0, 0.001) = 0.850;
+uniform vec3 speed = vec3(0.0, 3, 1);
+
+
+uniform float brightness : hint_range(0.0, 100.0, 0.0001) = 0.0015;
+uniform float darkmatter : hint_range(0.0, 100.0, 0.001) = 0.300;
+uniform float distfading : hint_range(0.0, 100.0, 0.001) = 0.730;
+uniform float saturation : hint_range(0.0, 100.0, 0.001) = 0.850;
+uniform vec4 colorize : source_color = vec4( 0.0, 0.0, 0.0, 1.0 );
+
+uniform vec2 iMouse = vec2(0.0, 0.0);
+
+
+void fragment()
+{
+	//get coords and direction
+	vec2 uv=FRAGCOORD.xy/(1.0 / SCREEN_PIXEL_SIZE.xy)-.5;
+	uv.y*=(1.0 / SCREEN_PIXEL_SIZE.xy).y/(1.0 / SCREEN_PIXEL_SIZE.xy).x;
+	vec3 dir=vec3(uv*zoom,1.);
+	vec3 time=vec3(speed * TIME * 0.001);//vec3(speed.x * TIME * 00.1, speed.y * TIME * 0.1, speed.z * TIME * 0.1);
+
+
+	//mouse rotation
+	float a1=.5+iMouse.x/(1.0 / SCREEN_PIXEL_SIZE.xy).x*2.;
+	float a2=.8+iMouse.y/(1.0 / SCREEN_PIXEL_SIZE.xy).y*2.;
+	mat2 rot1=mat2(vec2(cos(a1),sin(a1)),vec2(-sin(a1),cos(a1)));
+	mat2 rot2=mat2(vec2(cos(a2),sin(a2)),vec2(-sin(a2),cos(a2)));
+	dir.xz*=rot1;
+	dir.xy*=rot2;
+	vec3 from=vec3(1.,.5,0.5);
+	from+=time;
+	from.xz*=rot1;
+	from.xy*=rot2;
+	
+	//volumetric rendering
+	float s=0.1,fade=1.;
+	vec3 v=vec3(0.);
+	
+	for (int r=0; r<volsteps; r++) {
+		vec3 p=from+s*dir*.5;
+		p = abs(vec3(tile)-mod(p,vec3(tile*2.))); // tiling fold
+		float pa,a=pa=1.0;
+		for (int i=0; i<iterations; i++) { 
+			p=abs(p)/dot(p,p)-formuparam; // the magic formula
+			a+=abs(length(p)-pa); // absolute sum of average change
+			pa=length(p);
+		}
+		float dm=max(0.,darkmatter-a*a*.001); //dark matter
+		a*=a*a; // add contrast
+		if (r>6) fade*=1.-dm; // dark matter, don't render near
+		//v+=vec3(dm,dm*.5,0.);
+		v+=fade;
+		v+=vec3(s,s*s,s*s*s*s)*a*brightness*fade; // coloring based on distance
+		fade*=distfading; // distance fading
+		s+=stepsize;
+	}
+	
+	v=mix(vec3(length(v)), v / (1.0 - colorize.rgb),saturation); //color adjust
+	COLOR = vec4(v*.01,1.);	
+	
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3adu5"]
+shader = SubResource("Shader_x4ews")
+shader_parameter/brightness = 0.0006
+shader_parameter/colorize = Color(0, 0, 0, 1)
+shader_parameter/darkmatter = 0.774
+shader_parameter/distfading = 0.602
+shader_parameter/formuparam = 0.48
+shader_parameter/iMouse = Vector2(0, 0)
+shader_parameter/iterations = 13
+shader_parameter/saturation = 0.9
+shader_parameter/speed = Vector3(1, 0.5, 1)
+shader_parameter/stepsize = 0.1
+shader_parameter/tile = 0.839
+shader_parameter/volsteps = 6
+shader_parameter/zoom = 1.756
+
+[node name="StartMenu" type="Node2D"]
+script = ExtResource("1_ewfjn")
+main_game_scene = ExtResource("2_guehj")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_c2od7")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="FancyShader" type="ColorRect" parent="BackgroundLayer"]
+material = SubResource("ShaderMaterial_3adu5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Dimming" type="ColorRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.627451)
+metadata/_edit_lock_ = true
+
+[node name="SplashScreenLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="SplashScreenBackground" type="ColorRect" parent="SplashScreenLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BarelyAwakeGames" type="Sprite2D" parent="SplashScreenLayer/SplashScreenBackground"]
+position = Vector2(488, -240)
+texture = ExtResource("2_x3g3f")
+
+[node name="MainMenuLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenuControl" type="Control" parent="MainMenuLayer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_cybgf")
+
+[node name="TitleMargin" type="MarginContainer" parent="MainMenuLayer/MainMenuControl"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -405.0
+offset_top = 1.0
+offset_right = 405.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 64
+
+[node name="Title Label" type="Label" parent="MainMenuLayer/MainMenuControl/TitleMargin"]
+offset_top = 64.0
+offset_right = 810.0
+offset_bottom = 127.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Just Another Asteroid Clone"
+
+[node name="CenterContainer" type="CenterContainer" parent="MainMenuLayer/MainMenuControl"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MainMenuLayer/MainMenuControl/CenterContainer"]
+custom_minimum_size = Vector2(512, 384)
+offset_left = 256.0
+offset_top = 192.0
+offset_right = 768.0
+offset_bottom = 576.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer"]
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 505.0
+offset_bottom = 377.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 482.0
+offset_bottom = 354.0
+theme_override_constants/separation = 16
+
+[node name="StartButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_right = 466.0
+offset_bottom = 71.0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+shortcut_in_tooltip = false
+text = "Start Game"
+
+[node name="SettingsButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 87.0
+offset_right = 466.0
+offset_bottom = 158.0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Settings"
+
+[node name="HighscoresButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 174.0
+offset_right = 466.0
+offset_bottom = 246.0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Highscores"
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 262.0
+offset_right = 466.0
+offset_bottom = 338.0
+theme_override_constants/margin_top = 32
+
+[node name="QuitButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+offset_top = 32.0
+offset_right = 466.0
+offset_bottom = 76.0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[node name="InfoMargin" type="MarginContainer" parent="MainMenuLayer/MainMenuControl"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 32
+
+[node name="InfoLabel" type="Label" parent="MainMenuLayer/MainMenuControl/InfoMargin"]
+offset_right = 45.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 24
+text = "abc"
+
+[node name="AdditionalMenuLayer" type="CanvasLayer" parent="."]
+
+[node name="SettingsMenu" parent="AdditionalMenuLayer" instance=ExtResource("3_yjl72")]
+
+[connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]
+[connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_mouse_entered"]
+[connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_mouse_exited"]
+[connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_mouse_entered"]
+[connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_mouse_exited"]
+[connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HighscoresButton" to="." method="_on_highscores_button_mouse_entered"]
+[connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HighscoresButton" to="." method="_on_highscores_button_mouse_exited"]
+[connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/QuitButton" to="." method="_on_quit_button_mouse_exited"]

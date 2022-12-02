@@ -1,0 +1,100 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuw3vupmrtaok"]
+
+[ext_resource type="Script" path="res://ui/ui.gd" id="1_jc0xh"]
+[ext_resource type="LabelSettings" uid="uid://by6qcyuyjyike" path="res://ui/ui_label.tres" id="2_7yx8j"]
+[ext_resource type="Script" path="res://ui/score.gd" id="3_1fypm"]
+[ext_resource type="Script" path="res://ui/health.gd" id="4_ykj1i"]
+[ext_resource type="PackedScene" uid="uid://byqvxvh1ldf42" path="res://ui/pause_menu.tscn" id="5_lhpec"]
+[ext_resource type="PackedScene" uid="uid://bfcgctem4fstt" path="res://ui/settings_menu.tscn" id="6_4upu1"]
+
+[node name="UI" type="CanvasLayer"]
+process_mode = 3
+follow_viewport_enabled = true
+script = ExtResource("1_jc0xh")
+
+[node name="UIControls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Score Margin" type="MarginContainer" parent="UIControls"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="ScoreLabel" type="Label" parent="UIControls/Score Margin"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 136.0
+offset_bottom = 49.0
+text = "Score: 0"
+label_settings = ExtResource("2_7yx8j")
+script = ExtResource("3_1fypm")
+
+[node name="LevelMargin" type="MarginContainer" parent="UIControls"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_right = 27.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 16
+
+[node name="LevelLabel" type="Label" parent="UIControls/LevelMargin"]
+unique_name_in_owner = true
+offset_top = 16.0
+offset_right = 105.0
+offset_bottom = 49.0
+text = "Level 1"
+label_settings = ExtResource("2_7yx8j")
+
+[node name="HealthMargin" type="MarginContainer" parent="UIControls"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="HealthGridContainer" type="GridContainer" parent="UIControls/HealthMargin"]
+unique_name_in_owner = true
+offset_top = 16.0
+offset_right = 24.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 6
+script = ExtResource("4_ykj1i")
+
+[node name="CenterLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -16.5
+offset_right = 90.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "center_label"
+label_settings = ExtResource("2_7yx8j")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_lhpec")]
+unique_name_in_owner = true
+
+[node name="SettingsMenu" parent="." instance=ExtResource("6_4upu1")]
+unique_name_in_owner = true

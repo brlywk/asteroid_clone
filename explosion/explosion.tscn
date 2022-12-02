@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmmq3yheyyaba"]
+
+[ext_resource type="Script" path="res://explosion/explosion.gd" id="1_lxsh0"]
+[ext_resource type="AudioStream" uid="uid://dxn6frd25xdhg" path="res://audio/explosion_1.ogg" id="2_5gblf"]
+[ext_resource type="AudioStream" uid="uid://cgnjvmnw4gews" path="res://audio/explosion_2.ogg" id="3_50bgs"]
+[ext_resource type="AudioStream" uid="uid://kcvcwcdik75" path="res://audio/explosion_3.ogg" id="4_g38vj"]
+[ext_resource type="AudioStream" uid="uid://dawqfm8lxx0pe" path="res://audio/explosion_4.ogg" id="5_b5w52"]
+
+[sub_resource type="Gradient" id="Gradient_vfigo"]
+colors = PackedColorArray(0.705108, 1.52574e-05, 0.495746, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vll3s"]
+gradient = SubResource("Gradient_vfigo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jg2sm"]
+direction = Vector3(1, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+angular_velocity_min = 180.0
+angular_velocity_max = 360.0
+angle_max = 535.8
+color_ramp = SubResource("GradientTexture1D_vll3s")
+turbulence_enabled = true
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 0.0
+turbulence_noise_speed = Vector3(1, 1, 0)
+turbulence_influence_min = 0.03
+turbulence_influence_max = 0.25
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jgv8e"]
+radius = 8.0
+
+[node name="Explosion" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_lxsh0")
+small_explosions = [ExtResource("2_5gblf")]
+medium_explosions = [ExtResource("3_50bgs")]
+large_explosions = [ExtResource("4_g38vj"), ExtResource("5_b5w52")]
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.66
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+trail_enabled = true
+trail_sections = 2
+process_material = SubResource("ParticleProcessMaterial_jg2sm")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+max_distance = 1024.0
+bus = &"Effects"
+area_mask = 3
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jgv8e")

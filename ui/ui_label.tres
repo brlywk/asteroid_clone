@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://by6qcyuyjyike"]
+
+[ext_resource type="FontFile" uid="uid://wqufa70u3e6v" path="res://ui/assets/independent_modern.ttf" id="1_a7l04"]
+
+[resource]
+font = ExtResource("1_a7l04")
+font_size = 24
