@@ -9,6 +9,7 @@ var game_settings: GameSettings
 var game_settings_path: String = ProjectSettings.globalize_path("user://config.tres")
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if ResourceLoader.exists(game_settings_path):
@@ -18,6 +19,9 @@ func _ready() -> void:
 		
 	_init_audio()
 	_init_video()
+	
+	# DEBUG delete
+	print(game_settings_path)
 
 
 #---------- PUBLIC FUNCTIONS ----------#

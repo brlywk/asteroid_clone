@@ -78,11 +78,14 @@ Scores="*res://scores/highscores.gd"
 
 window/size/viewport_width=1024
 window/size/viewport_height=768
-window/size/resizable=false
 window/size/window_width_override=2048
 window/size/window_height_override=1536
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg")
 
 [gui]
 

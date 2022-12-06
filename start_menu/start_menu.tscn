@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqxbts8jgwqjh"]
+[gd_scene load_steps=11 format=3 uid="uid://bqxbts8jgwqjh"]
 
 [ext_resource type="Script" path="res://start_menu/start_menu.gd" id="1_ewfjn"]
 [ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_cybgf"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bmc1sgsvkw5wf" path="res://start_menu/barely_awake_games.png" id="2_x3g3f"]
 [ext_resource type="PackedScene" uid="uid://bfcgctem4fstt" path="res://ui/settings_menu.tscn" id="3_yjl72"]
 [ext_resource type="AudioStream" uid="uid://csvblg6wnnty4" path="res://audio/menu_music.ogg" id="4_c2od7"]
+[ext_resource type="PackedScene" uid="uid://w8787b2xed58" path="res://ui/highscores_menu.tscn" id="7_jnnyk"]
+[ext_resource type="PackedScene" uid="uid://c4oodaqadwdi7" path="res://ui/controls_menu.tscn" id="8_w5en3"]
 
 [sub_resource type="Shader" id="Shader_x4ews"]
 code = "shader_type canvas_item;
@@ -210,27 +212,35 @@ theme_override_constants/separation = 16
 
 [node name="StartButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 offset_right = 466.0
-offset_bottom = 71.0
+offset_bottom = 49.0
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
 shortcut_in_tooltip = false
 text = "Start Game"
 
 [node name="SettingsButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-offset_top = 87.0
+offset_top = 65.0
 offset_right = 466.0
-offset_bottom = 158.0
+offset_bottom = 115.0
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
 text = "Settings"
 
 [node name="HighscoresButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-offset_top = 174.0
+offset_top = 131.0
+offset_right = 466.0
+offset_bottom = 180.0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Highscores"
+
+[node name="ControlsButton" type="Button" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+offset_top = 196.0
 offset_right = 466.0
 offset_bottom = 246.0
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Highscores"
+text = "Controls"
 
 [node name="MarginContainer" type="MarginContainer" parent="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 offset_top = 262.0
@@ -269,6 +279,10 @@ text = "abc"
 
 [node name="SettingsMenu" parent="AdditionalMenuLayer" instance=ExtResource("3_yjl72")]
 
+[node name="HighscoresMenu" parent="AdditionalMenuLayer" instance=ExtResource("7_jnnyk")]
+
+[node name="ControlsMenu" parent="AdditionalMenuLayer" instance=ExtResource("8_w5en3")]
+
 [connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]
 [connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_mouse_entered"]
 [connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_mouse_exited"]
@@ -276,5 +290,7 @@ text = "abc"
 [connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_mouse_exited"]
 [connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HighscoresButton" to="." method="_on_highscores_button_mouse_entered"]
 [connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HighscoresButton" to="." method="_on_highscores_button_mouse_exited"]
+[connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsButton" to="." method="_on_controls_button_mouse_entered"]
+[connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ControlsButton" to="." method="_on_controls_button_mouse_exited"]
 [connection signal="mouse_entered" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]
 [connection signal="mouse_exited" from="MainMenuLayer/MainMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/QuitButton" to="." method="_on_quit_button_mouse_exited"]

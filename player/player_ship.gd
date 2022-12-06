@@ -21,7 +21,6 @@ var song_bpm: float
 
 @onready var outline: Line2D = $Line2D
 @onready var ship_size: Vector2 = Util.estimate_object_size(outline.points)
-@onready var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 @onready var animation_player: AnimationPlayer = $ThrustAnimationPlayer
 @onready var thrust_outline: Line2D = $ThrustLine
 
@@ -70,6 +69,7 @@ func _physics_process(delta: float) -> void:
 	var _m: bool = move_and_slide()
 	
 	# Move over screen bounds
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 	var cur_transform: Transform2D = get_transform()
 	var new_transform: Transform2D = Util.move_at_screen_bounds(cur_transform, ship_size, viewport_size)
 	set_transform(new_transform)

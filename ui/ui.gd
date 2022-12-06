@@ -41,7 +41,13 @@ func hide_center_label() -> void:
 
 func update_level_label(level: int) -> void:
 	LevelLabel.text = "Level " + str(level)
+	
+	
+func show_enter_highscore_prompt() -> void:
+	%EnterHighscoreMenu.show()
 
+
+# ---------- Signal Handlers ---------- #
 
 func _on_player_health_change(old_value: int, new_value: int) -> void:
 	if new_value > old_value:

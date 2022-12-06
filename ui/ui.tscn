@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuw3vupmrtaok"]
+[gd_scene load_steps=9 format=3 uid="uid://cuw3vupmrtaok"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_jc0xh"]
 [ext_resource type="LabelSettings" uid="uid://by6qcyuyjyike" path="res://ui/ui_label.tres" id="2_7yx8j"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://ui/health.gd" id="4_ykj1i"]
 [ext_resource type="PackedScene" uid="uid://byqvxvh1ldf42" path="res://ui/pause_menu.tscn" id="5_lhpec"]
 [ext_resource type="PackedScene" uid="uid://bfcgctem4fstt" path="res://ui/settings_menu.tscn" id="6_4upu1"]
+[ext_resource type="PackedScene" uid="uid://w8787b2xed58" path="res://ui/highscores_menu.tscn" id="7_7ahi2"]
+[ext_resource type="PackedScene" uid="uid://byx0paodw1xfl" path="res://ui/enter_highscore_menu.tscn" id="8_k15oe"]
 
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
@@ -69,7 +71,6 @@ unique_name_in_owner = true
 offset_top = 16.0
 offset_right = 24.0
 offset_bottom = 40.0
-grow_horizontal = 0
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 6
@@ -97,4 +98,10 @@ vertical_alignment = 1
 unique_name_in_owner = true
 
 [node name="SettingsMenu" parent="." instance=ExtResource("6_4upu1")]
+unique_name_in_owner = true
+
+[node name="HighscoresMenu" parent="." instance=ExtResource("7_7ahi2")]
+unique_name_in_owner = true
+
+[node name="EnterHighscoreMenu" parent="." instance=ExtResource("8_k15oe")]
 unique_name_in_owner = true

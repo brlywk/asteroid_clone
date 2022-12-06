@@ -17,6 +17,7 @@ var respawning: bool = false
 var game_over: bool = false
 var level_ending: bool = false
 var killing_asteroid: String
+var _restart_timeout: int = 3
 
 
 # Scenes
@@ -32,7 +33,9 @@ var killing_asteroid: String
 @onready var center_label: Label = find_child("CenterLabel")
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
 @onready var settings_menu: ColorRect = find_child("SettingsMenu")
+@onready var highscores_menu: ColorRect = find_child("HighscoresMenu")
 @onready var PauseMenu: ColorRect = find_child("PauseMenu")
+@onready var EnterHighscorePrompt: ColorRect = find_child("EnterHighscoreMenu")
 @onready var Asteroids: Node2D = $Asteroids
 
 
@@ -41,7 +44,6 @@ var killing_asteroid: String
 func _ready():
 	# connect some signals
 	settings_menu.optics_changed.connect(_on_optics_settings_changed)
-	settings_menu.optics_changed.connect(_on_fullscreen_changed)
 	
 	# get viewport
 	viewport_size = get_viewport().get_visible_rect().size
@@ -58,23 +60,30 @@ func _ready():
 	# connections connections...
 	GameStats.player_died.connect(_on_health_zero)
 	PauseMenu.unpaused.connect(_on_pause_menu_hidden)
+	EnterHighscorePrompt.score_saved.connect(_on_score_saved)
+	
 	
 	# ui stuff
 	ui.reset_ui(player_instance.outline.points)
 	
 	# music stuff
 	Util.fade_music(music_player, true, 0.0, Settings.game_settings.music_volume, 1.0)
+	
+	# DEBUG scores
+	#print(Scores.get_highscores())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta: float) -> void:
-	if OS.is_debug_build():
-		if Input.is_action_just_pressed("debug_reload"):
-			var _r = get_tree().reload_current_scene()
-			get_tree().paused = false
+	# DEBUG: delete for "release build"
+#	if OS.is_debug_build():
+#		if Input.is_action_just_pressed("debug_reload"):
+#			var _r = get_tree().reload_current_scene()
+#			get_tree().paused = false
 			
 	if Input.is_action_just_pressed("ui_cancel"):
 		$UI/PauseMenu.settings_menu = $UI/SettingsMenu
+		$UI/PauseMenu.highscores_menu = $UI/HighscoresMenu
 		get_tree().paused = true
 		$UI/PauseMenu.show()
 			
@@ -98,6 +107,12 @@ func _physics_process(_delta: float) -> void:
 		call_deferred("create_level")
 		get_tree().paused = false
 		ui.hide_center_label()
+		
+	if game_over and not respawning:
+		ui.show_enter_highscore_prompt()
+		
+	if game_over and respawning:
+		ui.show_center_label("Restarting game in " + str(_restart_timeout) + " seconds")
 	
 
 #---------- PUBLIC FUNCTIONS ----------#
@@ -106,9 +121,13 @@ func reset_game() -> void:
 	# delete all asteroids
 	for a in Asteroids.get_children():
 		a.queue_free()
+		
+	# reset respawn timeout
+	_restart_timeout = 3
 	
 	# reset player
-	player_instance.queue_free()
+	if is_instance_valid(player_instance):
+		player_instance.queue_free()
 	player_instance = spawn_player(viewport_size / 2)
 		
 	# create new level
@@ -120,6 +139,13 @@ func reset_game() -> void:
 
 	# we can play again
 	game_over = false
+	respawning = false
+	
+	# restart music
+	Util.fade_music(music_player, true, 0.0, Settings.game_settings.music_volume, 1.0)
+	
+	# unpause game
+	get_tree().paused = false
 	
 	
 ## create a new level 
@@ -253,7 +279,7 @@ func _on_Asteroid_destroyed(a_size: Util.AsteroidSize, a_position: Vector2,
 
 # player dead! :-(
 func _on_player_died(p_position: Vector2, p_velocity: Vector2, name_of_killer: String) -> void:
-	killing_asteroid = name_of_killer # TODO: via function binding!
+	killing_asteroid = name_of_killer
 	
 	# stop music
 	Util.fade_music(music_player, false, Settings.game_settings.music_volume, 0.0, 0.5)
@@ -271,21 +297,26 @@ func _on_player_died(p_position: Vector2, p_velocity: Vector2, name_of_killer: S
 
 ## player dead-dead! x_x
 func _on_health_zero() -> void:
-	game_over = true
-	ui.show_center_label("GAME OVER")
-	
-	# TODO: this should be a menu (pause menu?) showing a restart game button
+	game_over = true	
 	
 
 ## game settings regarding look of opjects changed
-func _on_optics_settings_changed() -> void:
-	pass
+func _on_optics_settings_changed(changes: Dictionary) -> void:
+	if not changes.is_empty():
+		# Note: we're not bothering with changing bullet settings, as bullets
+		# are instanciated anew with every shot anyway
+		for key in changes:
+			# HACK: Not the best way to do this, as this assumes my naming
+			# scheme is 100 % consistent...
+			var prop: String = "default_color" if key.contains("color") else "width"
+			
+			if key.contains("player"):
+				player_instance.get_node("Line2D").set(prop, changes[key])
+			if key.contains("asteroid"):
+				for a in Asteroids.get_children():
+					a.get_node("Line2D").set(prop, changes[key])
 	
 	
-func _on_fullscreen_changed() -> void:
-	pass
-
-
 func _on_music_player_finished() -> void:
 	Util.fade_music(music_player, true, 0.0, Settings.game_settings.music_volume, 0.01)
 	
@@ -294,3 +325,19 @@ func _on_pause_menu_hidden() -> void:
 	## yes, it could also just say !game_over, but this is more readable
 	var still_paused: bool = game_over or respawning
 	get_tree().paused = still_paused
+
+
+func _on_score_saved() -> void:
+	EnterHighscorePrompt.hide()
+	respawning = true
+	%GameResetTimer.start()
+
+
+func _on_reset_timeout() -> void:
+	if _restart_timeout > 0:
+		ui.show_center_label("Restarting game in " + str(_restart_timeout) + " seconds")
+		_restart_timeout -= 1
+	else:
+		%GameResetTimer.stop()
+		ui.hide_center_label()
+		reset_game()

@@ -5,14 +5,20 @@ extends Node2D
 @export var main_game_scene: PackedScene
 
 
+# For learning purposes, using something different everywhere
+# find_child() is slow with lots of nodes (better use Unique Name, or get_node())
 @onready var SplashScreenLayer: CanvasLayer = find_child("SplashScreenLayer")
 @onready var MusicPlayer: AudioStreamPlayer = $MusicPlayer
 @onready var SplashLogo: Sprite2D = find_child("BarelyAwakeGames")
 @onready var SplashScreenBackground: ColorRect = find_child("SplashScreenBackground")
 @onready var QuitButton: Button = find_child("QuitButton")
 @onready var SettingsButton: Button = find_child("SettingsButton")
+@onready var HighscoresButton: Button = find_child("HighscoresButton")
 @onready var StartButton: Button = find_child("StartButton")
+@onready var ControlsButton: Button = find_child("ControlsButton")
 @onready var SettingsMenu: ColorRect = find_child("SettingsMenu")
+@onready var HighscoresMenu: ColorRect = find_child("HighscoresMenu")
+@onready var ControlsMenu: ColorRect = find_child("ControlsMenu")
 @onready var MainMenu: Control = find_child("MainMenuControl")
 @onready var InfoLabel: Label = find_child("InfoLabel")
 
@@ -34,7 +40,10 @@ func _ready() -> void:
 	# signal connections
 	QuitButton.pressed.connect(get_tree().quit)
 	SettingsButton.pressed.connect(SettingsMenu.show_settings)
+	HighscoresButton.pressed.connect(HighscoresMenu.show_highscores_menu)
 	StartButton.pressed.connect(_on_start_button_pressed)
+	ControlsButton.pressed.connect(ControlsMenu.show)
+	
 	
 	# fade in logo
 	_fade_in_splash_screen()
@@ -91,7 +100,7 @@ func _on_settings_button_mouse_exited() -> void:
 
 
 func _on_highscores_button_mouse_entered() -> void:
-	_set_info_label_text("Coming soon")
+	_set_info_label_text("Show highscores")
 
 
 func _on_highscores_button_mouse_exited() -> void:
@@ -106,8 +115,14 @@ func _on_quit_button_mouse_exited() -> void:
 	_set_info_label_text("")
 
 
+func _on_controls_button_mouse_entered() -> void:
+	_set_info_label_text("Show game controls")
+
+
+func _on_controls_button_mouse_exited() -> void:
+	_set_info_label_text("")
+
+
 func _on_music_player_finished() -> void:
 	Util.fade_music(MusicPlayer, true, 0.0, Settings.game_settings.music_volume, 0.01)
-	
-#func fade_music(music_player: AudioStreamPlayer, play: bool, start_volume: float,
-#		target_volume: float, duration: float) -> void:
+

@@ -1,72 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://byqvxvh1ldf42"]
+[gd_scene load_steps=9 format=3 uid="uid://w8787b2xed58"]
 
-[ext_resource type="Shader" path="res://ui/blur.gdshader" id="1_lqwxr"]
-[ext_resource type="Script" path="res://ui/pause_menu.gd" id="2_7qlih"]
-[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_mq7eq"]
+[ext_resource type="Script" path="res://ui/highscores_menu.gd" id="1_4d7m8"]
+[ext_resource type="Shader" path="res://ui/blur.gdshader" id="1_m5uye"]
+[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="3_xyyaq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_644s1"]
-shader = ExtResource("1_lqwxr")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_myvg6"]
+shader = ExtResource("1_m5uye")
 shader_parameter/blur = 0.0
 shader_parameter/brightness = 1.0
-
-[sub_resource type="InputEventAction" id="InputEventAction_6dejt"]
-action = &"ui_cancel"
-pressed = true
-
-[sub_resource type="Shortcut" id="Shortcut_ne8fp"]
-events = [SubResource("InputEventAction_6dejt")]
-
-[sub_resource type="Animation" id="Animation_v40he"]
-resource_name = "Hide"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/blur")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:material:shader_parameter/brightness")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CenterContainer:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_08rua"]
 length = 0.001
@@ -171,6 +112,58 @@ tracks/3/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_v40he"]
+resource_name = "Hide"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/blur")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/brightness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w1tcb"]
 _data = {
 "Hide": SubResource("Animation_v40he"),
@@ -178,19 +171,17 @@ _data = {
 "Show": SubResource("Animation_ijwkm")
 }
 
-[node name="PauseMenu" type="ColorRect"]
-process_mode = 3
-material = SubResource("ShaderMaterial_644s1")
+[node name="HighscoresMenu" type="ColorRect"]
+material = SubResource("ShaderMaterial_myvg6")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_7qlih")
+script = ExtResource("1_4d7m8")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -199,64 +190,112 @@ grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 custom_minimum_size = Vector2(512, 256)
-layout_mode = 2
-theme = ExtResource("2_mq7eq")
+offset_left = 256.0
+offset_top = 256.0
+offset_right = 768.0
+offset_bottom = 512.0
+theme = ExtResource("3_xyyaq")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
-layout_mode = 2
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 505.0
+offset_bottom = 249.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 482.0
+offset_bottom = 226.0
 
 [node name="HeaderLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_mq7eq")
+offset_right = 466.0
+offset_bottom = 33.0
 theme_override_font_sizes/font_size = 24
-text = "Pause"
+text = "Highscores"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
+offset_top = 37.0
+offset_right = 466.0
+offset_bottom = 41.0
 
-[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ScoresGrid" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-layout_mode = 2
+offset_top = 45.0
+offset_right = 466.0
+offset_bottom = 154.0
 size_flags_vertical = 3
-theme = ExtResource("2_mq7eq")
-theme_override_font_sizes/font_size = 24
-shortcut_in_tooltip = false
-shortcut = SubResource("Shortcut_ne8fp")
-text = "Resume"
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+columns = 3
 
-[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
-text = "Settings"
+[node name="HeaderNameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_right = 300.0
+offset_bottom = 29.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Name"
 
-[node name="HighscoresButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Highscores"
+[node name="HeaderScoreLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_left = 316.0
+offset_right = 383.0
+offset_bottom = 29.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Score"
+
+[node name="HeaderLevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_left = 399.0
+offset_right = 466.0
+offset_bottom = 29.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "Level"
+horizontal_alignment = 2
+
+[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_top = 37.0
+offset_right = 300.0
+offset_bottom = 61.0
+size_flags_horizontal = 3
+text = "Testfgsdfgsdfgsdfgsdfgsdfgsdfg"
+
+[node name="ScoreLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_left = 316.0
+offset_top = 37.0
+offset_right = 383.0
+offset_bottom = 61.0
+size_flags_horizontal = 3
+text = "4242"
+
+[node name="LevelLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ScoresGrid"]
+offset_left = 399.0
+offset_top = 37.0
+offset_right = 466.0
+offset_bottom = 61.0
+size_flags_horizontal = 3
+text = "4"
+horizontal_alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 32
+offset_top = 158.0
+offset_right = 466.0
+offset_bottom = 218.0
+theme_override_constants/margin_top = 16
 
-[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("2_mq7eq")
+offset_top = 16.0
+offset_right = 466.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
-text = "Quit"
+text = "Back"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hide"

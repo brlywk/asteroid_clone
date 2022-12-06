@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=17 format=3 uid="uid://b8xw3k8erq8w0"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://b8xw3k8erq8w0"]
 
 [ext_resource type="FontFile" uid="uid://wqufa70u3e6v" path="res://ui/assets/independent_modern.ttf" id="1_7auub"]
 [ext_resource type="Texture2D" uid="uid://dab1mlrpcgv63" path="res://ui/assets/scifi_pixel_panel_clicked.png" id="2_af737"]
@@ -54,6 +54,22 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gbwqf"]
+texture = ExtResource("3_nqbo4")
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 7.0
+region_rect = Rect2(0, 0, 123, 60)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1fujw"]
+texture = ExtResource("3_nqbo4")
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 7.0
+region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nx72w"]
 texture = ExtResource("3_nqbo4")
@@ -134,6 +150,8 @@ Label/constants/shadow_outline_size = 1
 Label/font_sizes/font_size = 16
 Label/font_sizes/header = 24
 Label/fonts/font = ExtResource("1_7auub")
+LineEdit/styles/focus = SubResource("StyleBoxTexture_gbwqf")
+LineEdit/styles/normal = SubResource("StyleBoxTexture_1fujw")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_nx72w")
 TabBar/styles/button_highlight = SubResource("StyleBoxTexture_5caic")
 TabContainer/styles/panel = SubResource("StyleBoxTexture_8t5fo")

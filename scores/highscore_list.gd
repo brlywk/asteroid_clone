@@ -3,15 +3,11 @@ extends Resource
 ## Class representing highscores list
 
 
-@export var scores: Array[HighscoreEntry] = []:
-	get:
-		return scores
-	set(_new_value):
-		pass # we should not set this variable, only add scores via insert_score()
+@export var scores: Array[HighscoreEntry] = []
 
 
 ## Maximum number of allowed entries as to limit size of saved file
-var _max_entries: int = 25
+@export var max_entries: int = 25
 
 
 ## Return top 10 scores to be shown in scoreboard
@@ -28,8 +24,8 @@ func insert_score(new_score: HighscoreEntry) -> void:
 	scores.sort_custom(_sort_by_score)
 	
 	# check array size and truncate if necessary
-	if scores.size() >= _max_entries:
-		scores = scores.slice(0, _max_entries)
+	if scores.size() >= max_entries:
+		scores = scores.slice(0, max_entries)
 	
 
 ## Custom sorting for HighscoreEntry by score

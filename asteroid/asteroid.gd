@@ -23,9 +23,6 @@ var outline_size: Vector2 = Vector2(base_size, base_size)
 var min_and_max_points: Array ## min and max values in Vector2 for Small, Medium, Large
 
 
-@onready var viewport_size: Vector2 = get_viewport().get_visible_rect().size
-
-
 ## CALL IMMEDIATELY AFTER INSTANTIATING
 func init(a_size: Util.AsteroidSize, a_velocity: Vector2) -> void:
 	asteroid_size = a_size
@@ -79,6 +76,7 @@ func _ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	# handle moving over screen bounds
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 	var cur_transform: Transform2D = state.get_transform()
 	var new_transform: Transform2D = Util.move_at_screen_bounds(cur_transform, outline_size, viewport_size)
 	state.set_transform(new_transform)

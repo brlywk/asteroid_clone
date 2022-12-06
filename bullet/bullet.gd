@@ -12,7 +12,6 @@ var ttl_timer: Timer
 
 @onready var outline: Line2D = $Line2D
 @onready var bullet_size: Vector2 = Util.estimate_object_size(outline.points)
-@onready var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 
 
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +35,7 @@ func _ready():
 
 func _physics_process(_delta: float) -> void:
 	# Move over screen bounds
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 	var cur_transform: Transform2D = get_transform()
 	var new_transform: Transform2D = Util.move_at_screen_bounds(cur_transform, bullet_size, viewport_size)
 	set_transform(new_transform)

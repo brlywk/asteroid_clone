@@ -22,8 +22,11 @@ func save_highscores() -> void:
 	
 
 ## Adds a new highscore to the highscores list and saves it
-func add_highscore(new_score: HighscoreEntry) -> void:
-	highscores.insert_score(new_score)
+func add_highscore(player_name: String, new_score: int, new_level: int) -> void:
+	var new_entry: HighscoreEntry = HighscoreEntry.new()
+	new_entry.init(player_name, new_score, new_level)
+		
+	highscores.insert_score(new_entry)
 	save_highscores()
 
 

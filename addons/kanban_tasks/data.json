@@ -1,0 +1,61 @@
+{
+  "categories": [
+    {
+      "color": "6495ed",
+      "title": "Task"
+    }
+  ],
+  "columns": [
+    {
+      "stages": [
+        0
+      ]
+    },
+    {
+      "stages": [
+        1
+      ]
+    },
+    {
+      "stages": [
+        2
+      ]
+    }
+  ],
+  "settings": {
+    "show_details_preview": true
+  },
+  "stages": [
+    {
+      "tasks": [
+        0,
+        1
+      ],
+      "title": "Todo"
+    },
+    {
+      "tasks": [
+
+      ],
+      "title": "Doing"
+    },
+    {
+      "tasks": [
+
+      ],
+      "title": "Done"
+    }
+  ],
+  "tasks": [
+    {
+      "category": 0,
+      "details": "",
+      "title": "BUG: Explosions not moving"
+    },
+    {
+      "category": 0,
+      "details": "",
+      "title": "Instead of stopping, pause music on player death (before 0 health)"
+    }
+  ]
+}

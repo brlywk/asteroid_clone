@@ -1,20 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://byqvxvh1ldf42"]
+[gd_scene load_steps=9 format=3 uid="uid://c4oodaqadwdi7"]
 
-[ext_resource type="Shader" path="res://ui/blur.gdshader" id="1_lqwxr"]
-[ext_resource type="Script" path="res://ui/pause_menu.gd" id="2_7qlih"]
-[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_mq7eq"]
+[ext_resource type="Shader" path="res://ui/blur.gdshader" id="1_7onrc"]
+[ext_resource type="Theme" uid="uid://b8xw3k8erq8w0" path="res://ui/ui_theme.tres" id="2_f3ypk"]
+[ext_resource type="Script" path="res://ui/controls_menu.gd" id="3_38of2"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_644s1"]
-shader = ExtResource("1_lqwxr")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_btkpk"]
+shader = ExtResource("1_7onrc")
 shader_parameter/blur = 0.0
 shader_parameter/brightness = 1.0
-
-[sub_resource type="InputEventAction" id="InputEventAction_6dejt"]
-action = &"ui_cancel"
-pressed = true
-
-[sub_resource type="Shortcut" id="Shortcut_ne8fp"]
-events = [SubResource("InputEventAction_6dejt")]
 
 [sub_resource type="Animation" id="Animation_v40he"]
 resource_name = "Hide"
@@ -178,15 +171,15 @@ _data = {
 "Show": SubResource("Animation_ijwkm")
 }
 
-[node name="PauseMenu" type="ColorRect"]
-process_mode = 3
-material = SubResource("ShaderMaterial_644s1")
+[node name="ControlsMenu" type="ColorRect"]
+material = SubResource("ShaderMaterial_btkpk")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_7qlih")
+theme = ExtResource("2_f3ypk")
+script = ExtResource("3_38of2")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -198,9 +191,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(512, 256)
+custom_minimum_size = Vector2(512, 0)
 layout_mode = 2
-theme = ExtResource("2_mq7eq")
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
@@ -211,52 +203,82 @@ theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
 
 [node name="HeaderLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("2_mq7eq")
 theme_override_font_sizes/font_size = 24
-text = "Pause"
+text = "Controls"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResumeButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("2_mq7eq")
-theme_override_font_sizes/font_size = 24
-shortcut_in_tooltip = false
-shortcut = SubResource("Shortcut_ne8fp")
-text = "Resume"
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 2
 
-[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
-text = "Settings"
+size_flags_horizontal = 3
+text = "Speed Up"
 
-[node name="HighscoresButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Label2" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Highscores"
+size_flags_horizontal = 3
+text = "W / Up Arrow"
+
+[node name="Label3" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Turn Left"
+
+[node name="Label4" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "A / Left Arrow"
+
+[node name="Label5" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Turn Right"
+
+[node name="Label6" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "D / Right Arrow"
+
+[node name="Label7" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shoot"
+
+[node name="Label8" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Spacebar"
+
+[node name="Label9" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pause Menu"
+
+[node name="Label10" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Escape"
 
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 32
+theme_override_constants/margin_top = 16
 
-[node name="QuitButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="BackButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("2_mq7eq")
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
-text = "Quit"
+text = "Back"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hide"

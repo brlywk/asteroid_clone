@@ -102,6 +102,7 @@ player_safe_zone_scaling = 5.0
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1
+visible = false
 follow_viewport_enabled = true
 
 [node name="FancyShader" type="ColorRect" parent="BackgroundLayer"]
@@ -132,4 +133,8 @@ stream = ExtResource("8_lju5e")
 volume_db = -80.0
 bus = &"Music"
 
+[node name="GameResetTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]
+[connection signal="timeout" from="GameResetTimer" to="." method="_on_reset_timeout"]
