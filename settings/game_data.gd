@@ -5,7 +5,7 @@ extends Node
 
 
 # Player
-var player_start_lives: int = 1 # TODO: reset
+var player_start_lives: int = 3
 var player_lives_per_level: int = 1
 var player_maximum_lives: int = 6
 

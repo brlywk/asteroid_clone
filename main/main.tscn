@@ -102,7 +102,6 @@ player_safe_zone_scaling = 5.0
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
 layer = -1
-visible = false
 follow_viewport_enabled = true
 
 [node name="FancyShader" type="ColorRect" parent="BackgroundLayer"]

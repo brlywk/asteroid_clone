@@ -6,7 +6,7 @@ signal score_saved
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.visible = true
+	self.visible = false
 	
 	# Just trying out different ways to do things, for the sake of learning ;)
 	%OkButton.pressed.connect(save_score)
