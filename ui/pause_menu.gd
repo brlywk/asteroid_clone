@@ -16,7 +16,6 @@ var highscores_menu: ColorRect
 @onready var scores_button: Button = %HighscoresButton
 
 
-@warning_ignore(return_value_discarded)
 func _ready() -> void:
 	resume_button.pressed.connect(unpause)
 	quit_button.pressed.connect(get_tree().quit)
@@ -29,7 +28,7 @@ func unpause() -> void:
 	unpaused.emit()
 	
 
-func show() -> void:
+func show_menu() -> void:
 	animator.play("Show")
 	
 

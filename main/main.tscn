@@ -81,19 +81,19 @@ void fragment()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g3g8o"]
 shader = SubResource("Shader_w0sa4")
+shader_parameter/iterations = 13
+shader_parameter/formuparam = 0.48
+shader_parameter/volsteps = 6
+shader_parameter/stepsize = 0.1
+shader_parameter/zoom = 1.756
+shader_parameter/tile = 0.839
+shader_parameter/speed = Vector3(1, 0.5, 1)
 shader_parameter/brightness = 0.0006
-shader_parameter/colorize = Color(0, 0, 0, 1)
 shader_parameter/darkmatter = 0.774
 shader_parameter/distfading = 0.602
-shader_parameter/formuparam = 0.48
-shader_parameter/iMouse = Vector2(0, 0)
-shader_parameter/iterations = 13
 shader_parameter/saturation = 0.9
-shader_parameter/speed = Vector3(1, 0.5, 1)
-shader_parameter/stepsize = 0.1
-shader_parameter/tile = 0.839
-shader_parameter/volsteps = 6
-shader_parameter/zoom = 1.756
+shader_parameter/colorize = Color(0, 0, 0, 1)
+shader_parameter/iMouse = Vector2(0, 0)
 
 [node name="Main" type="Node2D"]
 process_mode = 3

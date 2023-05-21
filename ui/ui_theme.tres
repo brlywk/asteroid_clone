@@ -21,26 +21,14 @@ corner_detail = 5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r8kqt"]
 texture = ExtResource("2_af737")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cndrg"]
 texture = ExtResource("2_hi135")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t4cng"]
 texture = ExtResource("3_nqbo4")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvago"]
@@ -57,58 +45,30 @@ corner_detail = 5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gbwqf"]
 texture = ExtResource("3_nqbo4")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1fujw"]
 texture = ExtResource("3_nqbo4")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nx72w"]
 texture = ExtResource("3_nqbo4")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5caic"]
 texture = ExtResource("5_u3toy")
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 4.0
-margin_bottom = 4.0
 region_rect = Rect2(0, 0, 36, 19)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8t5fo"]
 texture = ExtResource("3_nqbo4")
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 region_rect = Rect2(0, 0, 123, 60)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xec7t"]
 texture = ExtResource("5_u3toy")
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 4.0
-margin_bottom = 4.0
 region_rect = Rect2(0, 0, 36, 19)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0tb4x"]
 texture = ExtResource("6_xsy0k")
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 4.0
-margin_bottom = 4.0
 region_rect = Rect2(0, 0, 36, 19)
 
 [resource]

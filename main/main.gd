@@ -39,7 +39,6 @@ var _restart_timeout: int = 3
 @onready var Asteroids: Node2D = $Asteroids
 
 
-@warning_ignore(return_value_discarded)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# connect some signals
@@ -85,7 +84,7 @@ func _physics_process(_delta: float) -> void:
 		$UI/PauseMenu.settings_menu = $UI/SettingsMenu
 		$UI/PauseMenu.highscores_menu = $UI/HighscoresMenu
 		get_tree().paused = true
-		$UI/PauseMenu.show()
+		$UI/PauseMenu.show_menu()
 			
 	# player died and is respawning
 	if respawning and not game_over and Input.is_action_just_released("shoot"):

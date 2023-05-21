@@ -26,11 +26,11 @@ func save_score() -> void:
 	score_saved.emit()
 
 
-func show() -> void:
+func show_menu() -> void:
 	%HeaderLabel.text = "Score: " + str(GameStats.score) + " / Level: " + str(GameStats.level)
 	self.visible = true
 	
 	
-func hide() -> void:
+func hide_menu() -> void:
 	score_saved.emit()
 	self.visible = false

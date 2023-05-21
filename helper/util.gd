@@ -161,7 +161,6 @@ func volume_percent_to_db(value: float) -> float:
 ##
 ## "play" is used to indicate wheter music should be started or stopped
 ## "start_volume" and "target_volume" are expected as values 0...100
-@warning_ignore(return_value_discarded)
 func fade_music(music_player: AudioStreamPlayer, play: bool, start_volume: float,
 		target_volume: float, duration: float) -> void:
 	start_volume = volume_percent_to_db(clampf(start_volume, 0.0, 100.0))
@@ -183,7 +182,6 @@ func fade_music(music_player: AudioStreamPlayer, play: bool, start_volume: float
 ## 
 ## Use with on_finished = Callable() and follow_up = false if no other action 
 ## should be called after fade is done
-@warning_ignore(return_value_discarded)
 func fade_screen_element(element: Node, fade_in: bool, duration: float,
 		on_finished: Callable, follow_up: bool = true) -> void:
 	var t: Tween = create_tween()

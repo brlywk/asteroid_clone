@@ -15,7 +15,6 @@ func _ready() -> void:
 		highscores = HighscoreList.new()
 
 
-@warning_ignore(return_value_discarded)
 ## Saves current highscores to disk
 func save_highscores() -> void:
 	ResourceSaver.save(highscores, highscores_path)

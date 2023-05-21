@@ -6,5 +6,5 @@ func _ready() -> void:
 	%BackButton.pressed.connect($AnimationPlayer.play.bind("Hide"))
 
 
-func show() -> void:
+func show_menu() -> void:
 	$AnimationPlayer.play("Show")

@@ -22,7 +22,6 @@ extends Node2D
 @onready var MainMenu: Control = find_child("MainMenuControl")
 @onready var InfoLabel: Label = find_child("InfoLabel")
 
-@warning_ignore(return_value_discarded)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# splash screen
@@ -55,7 +54,6 @@ func _on_start_button_pressed() -> void:
 	Util.fade_screen_element(MainMenu, false, 1.0, _start_main_scene)
 	
 
-@warning_ignore(return_value_discarded)
 func _start_main_scene() -> void:
 	get_tree().change_scene_to_packed(main_game_scene)
 

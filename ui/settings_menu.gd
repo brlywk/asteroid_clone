@@ -51,7 +51,6 @@ var _changed_settings: Dictionary = {}
 @onready var InfoLabel: Label = find_child("InfoLabel")
 
 
-@warning_ignore(return_value_discarded)
 func _ready() -> void:
 	# get previous settings to know what should emit the settings changed signal
 	_previous_settings = Settings.game_settings.create_dictionary()

@@ -26,7 +26,6 @@ func _ready() -> void:
 
 #---------- PUBLIC FUNCTIONS ----------#
 
-@warning_ignore(return_value_discarded)
 ## Saves current settings to disk
 func save_game_settings() -> void:
 	ResourceSaver.save(game_settings, game_settings_path)
